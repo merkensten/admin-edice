@@ -1,11 +1,9 @@
 import './styles/global.scss';
 
+import { Routing } from './routes/Routing';
+
 function App() {
-  return (
-    <div>
-      <h1 className="text-4xl">App</h1>
-    </div>
-  );
+  return <Routing />;
 }
 
 export default App;
