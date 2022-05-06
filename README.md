@@ -20,3 +20,4 @@ Syftet med appen är att hantera de admin relaterade delarna för e-dice i en we
 - Ta fram en fil med regler kring repot 
 - Implementera context för att avgöra om en användare är inloggad. (E-dice react kan jag utgå från)
 - Sedan gå vidare och bygga ut vyerna en i taget. 
+- Lägga till Ida och Kaj i git repot.
