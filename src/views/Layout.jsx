@@ -6,6 +6,7 @@ import { useAuth } from '../hooks/useAuth';
 // components
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { NavbarTest } from '../components/NavbarTest';
 
 export const Layout = ({ children }) => {
   const { user } = useAuth();
@@ -13,6 +14,7 @@ export const Layout = ({ children }) => {
   return (
     <>
       {user && <Navbar />}
+      {user && <NavbarTest />}
 
       {children}
       {user && <Footer />}

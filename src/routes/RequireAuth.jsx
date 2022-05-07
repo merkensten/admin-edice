@@ -9,7 +9,6 @@ import { useAuth } from '../hooks/useAuth';
 import { RoutingPath } from '../routes/RoutingPath';
 
 export const RequireAuth = ({ children }) => {
-  // const { user } = React.useContext(UserContext);
   const { user } = useAuth();
   const location = useLocation();
 
