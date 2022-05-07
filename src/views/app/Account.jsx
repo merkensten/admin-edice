@@ -1,5 +1,16 @@
-import React from 'react';
+// imports
+import * as React from 'react';
+
+// components
+import { PageTitle } from '../../components/PageTitle';
+import { Wrapper } from '../../components/Wrappers';
 
 export const Account = () => {
-  return <div>Account</div>;
+  return (
+    <>
+      <Wrapper>
+        <PageTitle text="My Account" />
+      </Wrapper>
+    </>
+  );
 };

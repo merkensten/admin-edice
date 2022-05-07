@@ -1,10 +1,16 @@
-import React from 'react';
+// imports
+import * as React from 'react';
+
+// components
+import { PageTitle } from '../../components/PageTitle';
+import { Wrapper } from '../../components/Wrappers';
 
 export const Dashboard = () => {
   return (
-    <div>
-      <h1>Dashboard</h1>
-      
-    </div>
+    <>
+      <Wrapper>
+        <PageTitle text="E-dice Dashboard" />
+      </Wrapper>
+    </>
   );
 };

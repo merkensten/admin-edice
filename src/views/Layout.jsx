@@ -4,7 +4,7 @@ import React from 'react';
 import { useAuth } from '../hooks/useAuth';
 
 // components
-import { Navbar } from '../components/Navbar';
+// import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { NavbarTest } from '../components/NavbarTest';
 
@@ -13,10 +13,10 @@ export const Layout = ({ children }) => {
 
   return (
     <>
-      {user && <Navbar />}
+      {/* {user && <Navbar />} */}
       {user && <NavbarTest />}
+      <main>{children}</main>
 
-      {children}
       {user && <Footer />}
     </>
   );

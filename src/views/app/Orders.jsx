@@ -1,5 +1,16 @@
-import React from 'react';
+// imports
+import * as React from 'react';
+
+// components
+import { PageTitle } from '../../components/PageTitle';
+import { Wrapper } from '../../components/Wrappers';
 
 export const Orders = () => {
-  return <div>Orders</div>;
+  return (
+    <div>
+      <Wrapper>
+        <PageTitle text="Orders" />
+      </Wrapper>
+    </div>
+  );
 };

@@ -6,7 +6,7 @@ const UserProvider = ({ children }) => {
   const [user, setUser] = React.useState(null);
 
   // Usertoken state. undefined if not in localstorage
-  const [userToken, setUserToken] = React.useState(() => {
+  const [userToken] = React.useState(() => {
     if (typeof window !== 'undefined') {
       if (window.localStorage.getItem('edice-user')) {
         const response = window.localStorage.getItem('edice-user');
