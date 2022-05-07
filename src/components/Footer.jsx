@@ -17,7 +17,7 @@ const navigation = {
 
 export const Footer = () => {
   return (
-    <footer className="bg-white">
+    <footer className="bg-white pb-20">
       <div className="max-w-7xl mx-auto pt-12 pb-6 px-4 overflow-hidden sm:px-6 lg:px-8">
         <nav
           className="-mx-5 -my-2 flex flex-wrap justify-center"

@@ -30,7 +30,7 @@ export const Routing = () => {
       <Layout>
         <Routes>
           <Route path={RoutingPath.Login}>
-            {!user && <Route index element={<Login />} />}
+            {<Route index element={<Login />} />}
             {user && (
               <Route path={RoutingPath.App}>
                 <Route index element={<Dashboard />} />
@@ -48,63 +48,4 @@ export const Routing = () => {
       </Layout>
     </BrowserRouter>
   );
-  // return (
-  //   <BrowserRouter>
-  //     <Layout>
-  //       <Routes>
-  //         <Route path={RoutingPath.Login}>
-  //           <Route index element={<Login />} />
-
-  //           {/* App Views */}
-
-  //           <Route path={RoutingPath.App}>
-  //             <Route
-  //               index
-  //               element={
-  //                 <RequireAuth>
-  //                   <Dashboard />
-  //                 </RequireAuth>
-  //               }
-  //             />
-  //             <Route
-  //               path="account"
-  //               element={
-  //                 <RequireAuth>
-  //                   <Account />
-  //                 </RequireAuth>
-  //               }
-  //             />
-  //             <Route
-  //               path="products"
-  //               element={
-  //                 <RequireAuth>
-  //                   <Products />
-  //                 </RequireAuth>
-  //               }
-  //             />
-  //             <Route
-  //               path="orders"
-  //               element={
-  //                 <RequireAuth>
-  //                   <Orders />
-  //                 </RequireAuth>
-  //               }
-  //             />
-  //             <Route
-  //               path="users"
-  //               element={
-  //                 <RequireAuth>
-  //                   <Users />
-  //                 </RequireAuth>
-  //               }
-  //             />
-  //           </Route>
-
-  //           {/* Not Found */}
-  //           <Route path="*" element={<NotFound />} />
-  //         </Route>
-  //       </Routes>
-  //     </Layout>
-  //   </BrowserRouter>
-  // );
 };
