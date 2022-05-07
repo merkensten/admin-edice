@@ -1,7 +1,10 @@
 // Imports
 import React from 'react';
 import { UserContext } from '../context/UserContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+
+// custom hooks
+import {useAuth} from '../hooks/useAuth';
 
 // Icons
 import { LockClosedIcon } from '@heroicons/react/solid';
@@ -10,19 +13,28 @@ import { LockClosedIcon } from '@heroicons/react/solid';
 import { RoutingPath } from '../routes/RoutingPath';
 
 export const LoginForm = () => {
-  const { user, setUser } = React.useContext(UserContext);
-  const naviagate = useNavigate();
+  const { setUser } = React.useContext(UserContext);
+  const { login } = useAuth();
+  const navigate = useNavigate();
+  const { state } = useLocation();
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
     setUser(true);
-    naviagate(RoutingPath.App);
+    navigate(RoutingPath.App);
+  };
+
+  const handleLogin = (event) => {
+    event.preventDefault();
+    login().then(() => {
+      navigate(state?.path || RoutingPath.App);
+    });
   };
 
   return (
     <form
       className="mt-8 space-y-6"
-      onSubmit={(event) => onSubmitHandler(event)}
+      onSubmit={(event) => handleLogin(event)}
     >
       <input type="hidden" name="remember" defaultValue="true" />
       <div className="rounded-md shadow-sm -space-y-px">
