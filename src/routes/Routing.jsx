@@ -3,9 +3,6 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { RoutingPath } from './RoutingPath';
 
-// context
-import { UserContext } from '../context/UserContext';
-
 // components
 import { RequireAuth } from './RequireAuth';
 
@@ -24,8 +21,6 @@ import { Orders } from '../views/app/Orders';
 import { Users } from '../views/app/Users';
 
 export const Routing = () => {
-  const { user } = React.useContext(UserContext);
-
   return (
     <BrowserRouter>
       <Layout>

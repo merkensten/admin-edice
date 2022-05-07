@@ -2,14 +2,15 @@
 import React from 'react';
 import { useLocation, Navigate } from 'react-router-dom';
 
-// context
-import { UserContext } from '../context/UserContext';
+// custom hooks
+import { useAuth } from '../hooks/useAuth';
 
 // helpers
 import { RoutingPath } from '../routes/RoutingPath';
 
 export const RequireAuth = ({ children }) => {
-  const { user } = React.useContext(UserContext);
+  // const { user } = React.useContext(UserContext);
+  const { user } = useAuth();
   const location = useLocation();
 
   return user === true ? (
