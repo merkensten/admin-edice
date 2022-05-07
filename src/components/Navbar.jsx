@@ -62,8 +62,8 @@ export const Navbar = () => {
                   </div>
                   <div className="flex-shrink-0 flex items-center">
                     <Link to="/app">
-                      <p className="text-xl md:text-2xl text-white">
-                        E-dice admin app
+                      <p className="text-xl md:text-2xl text-white lg:text-3xl">
+                        E-dice admin
                       </p>
                     </Link>
                   </div>
@@ -76,7 +76,7 @@ export const Navbar = () => {
                           item.current
                             ? 'bg-gray-900 text-white'
                             : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                          'px-3 py-2 rounded-md text-sm font-medium'
+                          'px-3 py-2 rounded-md text-sm font-medium lg:text-base'
                         )}
                         aria-current={item.current ? 'page' : undefined}
                       >
@@ -206,6 +206,12 @@ export const Navbar = () => {
                       </Disclosure.Button>
                     </Link>
                   ))}
+                  <button
+                    onClick={handleLogout}
+                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700"
+                  >
+                    Sign Out
+                  </button>
                 </div>
               </div>
             </Disclosure.Panel>
