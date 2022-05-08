@@ -7,6 +7,7 @@ import { Wrapper } from '../../components/Wrappers';
 import { AppNavCards } from '../../components/AppNavCards';
 
 export const Dashboard = () => {
+  console.log("Env " + process.env.REACT_APP_SERVER_URL);
   const user = {
     name: 'John Doe',
   };
