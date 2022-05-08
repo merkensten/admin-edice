@@ -1,6 +1,7 @@
 import * as React from 'react';
 
-// kod från christians swapi repo
+// Behöver fixa in bättre error hantering
+
 export const useFetch = (url) => {
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
