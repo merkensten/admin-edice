@@ -25,7 +25,6 @@ export const GetData = (url) => {
       .then(function () {
         // always executed
         setLoading(false);
-        console.log('done');
       });
   }, [url]);
 
@@ -34,84 +33,60 @@ export const GetData = (url) => {
 
 // Create Data
 export const CreateData = (url, data) => {
-  const [loading, setLoading] = React.useState(false);
-  const [error, setError] = React.useState(null);
-  const [errorMessage, setErrorMessage] = React.useState('');
+  axios
+    .post(url, data)
+    .then(function (response) {
+      // handle success
+      console.log('Success:' + response);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .then(function () {
+      // always executed
+      console.log('done');
+    });
 
-  React.useEffect(() => {
-    axios
-      .post(url, data)
-      .then(function (response) {
-        // handle success
-        setError(false);
-      })
-      .catch(function (error) {
-        // handle error
-        setError(error);
-        setErrorMessage(error.message);
-      })
-      .then(function () {
-        // always executed
-        setLoading(false);
-        console.log('done');
-      });
-  }, [url, data]);
-
-  return { loading, error, errorMessage };
+  return;
 };
 
 // Update data
 export const UpdateData = (url, data) => {
-  const [loading, setLoading] = React.useState(false);
-  const [error, setError] = React.useState(null);
-  const [errorMessage, setErrorMessage] = React.useState('');
+  axios
+    .put(url, data)
+    .then(function (response) {
+      // handle success
+      console.log('Success:' + response);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .then(function () {
+      // always executed
+      console.log('done');
+    });
 
-  React.useEffect(() => {
-    axios
-      .put(url, data)
-      .then(function (response) {
-        // handle success
-        setError(false);
-      })
-      .catch(function (error) {
-        // handle error
-        setError(error);
-        setErrorMessage(error.message);
-      })
-      .then(function () {
-        // always executed
-        setLoading(false);
-        console.log('done');
-      });
-  }, [url, data]);
-
-  return { loading, error, errorMessage };
+  return;
 };
 
 // Delete data
 export const DeleteData = (url) => {
-  const [loading, setLoading] = React.useState(false);
-  const [error, setError] = React.useState(null);
-  const [errorMessage, setErrorMessage] = React.useState('');
+  axios
+    .delete(url)
+    .then(function (response) {
+      // handle success
+      console.log('Success:' + response);
+    })
+    .catch(function (error) {
+      // handle error
+      console.log(error);
+    })
+    .then(function () {
+      // always executed
+      console.log('done');
+    });
 
-  React.useEffect(() => {
-    axios
-      .delete(url)
-      .then(function (response) {
-        // handle success
-        setError(false);
-      })
-      .catch(function (error) {
-        // handle error
-        setError(error);
-        setErrorMessage(error.message);
-      })
-      .then(function () {
-        // always executed
-        setLoading(false);
-        console.log('done');
-      });
-  }, [url]);
-
-  return { loading, error, errorMessage };
+  return;
 };
