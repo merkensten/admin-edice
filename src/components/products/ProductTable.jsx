@@ -1,31 +1,19 @@
-import React from 'react';
+import * as React from 'react';
 
 // hooks
-import { useFetch } from '../../hooks/useFetch';
-
-// === Behöver fixa en error hantering som fungerar
+import { GetData } from '../../hooks/useFetch';
 
 export const ProductTable = () => {
-  const [products, setProducts] = React.useState([]);
-  const [fetchError, setFetchError] = React.useState(false);
-
-  // fetch products data
-  const { data, loading, error } = useFetch(
-    process.env.REACT_APP_SERVER_URL + '/resource/getall'
-  );
-
-  React.useEffect(() => {
-    if (data) {
-      setProducts(data);
-    }
-  }, [data]);
+  const {
+    data: products,
+    loading,
+    error,
+    errorMessage,
+  } = GetData(`${process.env.REACT_APP_SERVER_URL}/resource/getall`);
 
   return (
     <div>
-      {loading && <p>Loading...</p>}
-      {products.length < 1 && (
-        <p>Error occured while trying to fetch products</p>
-      )}
+      {loading && <h2>Loading...</h2>}
 
       <div className="-mx-4 mt-8 overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-lg">
         <table className="min-w-full divide-y divide-gray-300">
@@ -99,6 +87,12 @@ export const ProductTable = () => {
           </tbody>
         </table>
       </div>
+      {error && (
+        <div className="my-4">
+          <p className="mt-2">Error occured while trying to fetch products</p>
+          <p className="mt-2">{errorMessage}</p>
+        </div>
+      )}
     </div>
   );
 };
