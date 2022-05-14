@@ -1,69 +1,185 @@
-import React from 'react';
+// imports
+import * as React from 'react';
 import axios from 'axios';
 
-export const AddProductForm = () => {
-  const postData = () => {
-    const productMock = {
-      title: 'Test from react admin page',
-      category: 'Test',
-      price: '99',
-      description: 'Test from react admin page',
-      material: 'plast',
-      img: 'product_green_dice.jpg',
-      quantity: 1,
-      slug: 'test-from-react-admin-page',
-    };
+// components
+import { FormInput, TextArea } from '../FormElements';
 
+export const AddProductForm = () => {
+  // product state
+  const [title, setTitle] = React.useState('');
+  const [description, setDescription] = React.useState('');
+  const [price, setPrice] = React.useState('');
+  const [image, setImage] = React.useState('');
+  const [material, setMaterial] = React.useState('');
+  const [slug, setSlug] = React.useState('');
+  const [quantity, setQuantity] = React.useState('');
+  const [category, setCategory] = React.useState('');
+
+  // form state
+  const [formSucess, setFormSucess] = React.useState(false);
+  const [formError, setFormError] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState('');
+
+  // clear input fields
+  const clearInputFields = () => {
+    setTitle('');
+    setDescription('');
+    setPrice('');
+    setImage('');
+    setMaterial('');
+    setSlug('');
+    setQuantity('');
+    setCategory('');
+    return;
+  };
+
+  // funktion för att skapa produktObjektet
+  const createProductObject = () => {
+    return {
+      title: title,
+      category: category,
+      price: price,
+      description: description,
+      material: material,
+      img: image,
+      quantity: quantity || 1,
+      slug: slug,
+    };
+  };
+
+  // funktion för att skicka in produktObjektet till databasen
+  const postDataWithAxios = (product) => {
     axios
-      .post(`${process.env.REACT_APP_SERVER_URL}/resource`, productMock)
+      .post(`${process.env.REACT_APP_SERVER_URL}/resource`, product)
       .then(function (response) {
         // handle success
-        console.log('Success');
+        setFormSucess(true);
       })
       .catch(function (error) {
         // handle error
-        console.log(error);
+        setFormError(true);
+        setErrorMessage(error.message);
       })
       .then(function () {
         // always executed
-        console.log('done');
+        if (formSucess) {
+          setFormError(false);
+        }
+
+        if (formError) {
+          setFormSucess(false);
+        }
       });
+    return;
   };
+
+  // funktionen som körs när formuläret submittas
+  const onFormSubmit = (event) => {
+    event.preventDefault();
+
+    const product = createProductObject();
+
+    postDataWithAxios(product);
+
+    return;
+  };
+
+  // useEffect för att kolla om formuläret är submittat och att det lyckades
+  React.useEffect(() => {
+    if (formSucess) {
+      clearInputFields();
+    }
+  }, [formSucess]);
+
   return (
-    <div className="isolate -space-y-px rounded-md shadow-sm">
-      <form
-        onSubmit={postData}
-        className="relative border border-gray-300 rounded-md rounded-b-none px-3 py-2 focus-within:z-10 focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600"
-      >
-        <label
-          htmlFor="name"
-          className="block text-xs font-medium text-gray-900"
-        >
-          Name
-        </label>
-        <input
-          type="text"
-          name="name"
-          id="name"
-          className="block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
-          placeholder="Jane Doe"
-        />
-      </form>
-      <div className="relative border border-gray-300 rounded-md rounded-t-none px-3 py-2 focus-within:z-10 focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600">
-        <label
-          htmlFor="job-title"
-          className="block text-xs font-medium text-gray-900"
-        >
-          Job Title
-        </label>
-        <input
-          type="text"
-          name="job-title"
-          id="job-title"
-          className="block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
-          placeholder="Head of Tomfoolery"
-        />
-      </div>
+    <div>
+      {formSucess && <h2>The product was added sucessfully</h2>}
+      {formError && (
+        <>
+          <h2>Something went wrong</h2>
+          <p>{errorMessage}</p>
+        </>
+      )}
+      {!formSucess && (
+        <form onSubmit={(event) => onFormSubmit(event)}>
+          <FormInput
+            label="Product Title"
+            type="text"
+            name="product-title"
+            id="product-title"
+            placeholder="product title"
+            setInputState={setTitle}
+            inputState={title}
+          />
+          <FormInput
+            label="Slug"
+            type="text"
+            name="slug"
+            id="slug"
+            placeholder="slug"
+            setInputState={setSlug}
+            inputState={slug}
+          />
+          <FormInput
+            label="Product Category"
+            type="text"
+            name="product-category"
+            id="product-category"
+            placeholder="product category"
+            setInputState={setCategory}
+            inputState={category}
+          />
+          <FormInput
+            label="Material"
+            type="text"
+            name="material"
+            id="material"
+            placeholder="material"
+            setInputState={setMaterial}
+            inputState={material}
+          />
+          <FormInput
+            label="Price"
+            type="number"
+            name="price"
+            id="price"
+            placeholder="price"
+            setInputState={setPrice}
+            inputState={price}
+          />
+          <FormInput
+            label="Img"
+            type="text"
+            name="img"
+            id="img"
+            placeholder="img file name"
+            setInputState={setImage}
+            inputState={image}
+          />
+          <FormInput
+            label="Quantity"
+            type="number"
+            name="quantity"
+            id="quantity"
+            placeholder="Type in the quantity"
+            setInputState={setQuantity}
+            inputState={quantity}
+          />
+          <TextArea
+            label="Description"
+            name="description"
+            id="description"
+            placeholder="product description"
+            setTextAreaState={setDescription}
+            textAreaState={description}
+          />
+
+          <button className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 mt-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto">
+            Add product
+          </button>
+        </form>
+      )}
     </div>
   );
 };
