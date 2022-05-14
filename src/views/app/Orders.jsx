@@ -4,7 +4,7 @@ import * as React from 'react';
 // components
 import { PageTitle } from '../../components/PageTitle';
 import { Wrapper } from '../../components/Wrappers';
-import { OrderTable } from '../../components/OrderTable';
+import { OrderTable } from '../../components/orders/OrderTable';
 
 export const Orders = () => {
   return (

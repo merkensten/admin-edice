@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 
 // useFetch
-import { GetData } from '../hooks/useFetch';
+import { GetData } from '../../hooks/useFetch';
 
 export const UserTable = () => {
   const {

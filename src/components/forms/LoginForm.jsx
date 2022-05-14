@@ -6,13 +6,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
 // custom hooks
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../../hooks/useAuth';
 
 // Icons
 import { LockClosedIcon } from '@heroicons/react/solid';
 
 // Helpers
-import { RoutingPath } from '../routes/RoutingPath';
+import { RoutingPath } from '../../routes/RoutingPath';
 
 // Schema for formvalidating
 const loginSchema = yup
