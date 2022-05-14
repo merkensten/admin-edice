@@ -1,5 +1,8 @@
 import * as React from 'react';
 
+const tailwindStyles =
+  'focus:shadow-xs appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline';
+
 const FormInput = ({
   type,
   placeholder,
@@ -13,11 +16,11 @@ const FormInput = ({
     setInputState(e.target.value);
   };
   return (
-    <label className="block text-base font-medium text-gray-900">
+    <label className="block text-base mt-2 font-medium text-gray-900">
       {label}
       <input
         onChange={handleInputChange}
-        className="w-full"
+        className={tailwindStyles}
         type={type}
         placeholder={`Type in the ${placeholder}...`}
         id={id}
@@ -40,14 +43,14 @@ const TextArea = ({
     setTextAreaState(e.target.value);
   };
   return (
-    <label className="block text-base font-medium text-gray-900">
+    <label className="block text-base mt-2 font-medium text-gray-900">
       {label}
       <textarea
         onChange={handleTextAreaChange}
         name={name}
         id={id}
         placeholder={`Type in the ${placeholder}...`}
-        className="w-full"
+        className={tailwindStyles}
         value={textAreaState}
       ></textarea>
     </label>
