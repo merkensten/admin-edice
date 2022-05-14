@@ -1,5 +1,5 @@
 // imports
-import React from 'react';
+import * as React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { RoutingPath } from './RoutingPath';
 
