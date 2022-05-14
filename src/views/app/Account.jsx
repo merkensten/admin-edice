@@ -4,8 +4,8 @@ import * as React from 'react';
 // components
 import { PageTitle } from '../../components/PageTitle';
 import { Wrapper } from '../../components/Wrappers';
-import { AccountSettings } from '../../components/AccountSettings';
-import { AccountPassword } from '../../components/AccountPassword';
+import { AccountSettings } from '../../components/account/AccountSettings';
+import { AccountPassword } from '../../components/account/AccountPassword';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');

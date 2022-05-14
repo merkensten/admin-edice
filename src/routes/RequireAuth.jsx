@@ -1,5 +1,5 @@
 // imports
-import React from 'react';
+import * as React from 'react';
 import { useLocation, Navigate } from 'react-router-dom';
 
 // custom hooks

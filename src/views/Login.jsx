@@ -4,7 +4,7 @@ import * as React from 'react';
 import { useAuth } from '../hooks/useAuth';
 
 // components
-import { LoginForm } from '../components/LoginForm';
+import { LoginForm } from '../components/forms/LoginForm';
 import { useNavigate } from 'react-router-dom';
 
 // helpers
