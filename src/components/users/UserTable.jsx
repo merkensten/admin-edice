@@ -7,6 +7,7 @@ import { TableHead } from '../table/TableHead';
 import { TableWrapper } from '../table/TableWrapper';
 import { TableBody } from '../table/TableBody';
 import { TableEditButton } from '../table/TableEditButton';
+import { TableRow } from '../table/TableRow';
 
 // useFetch
 import { GetData } from '../../hooks/useFetch';
@@ -35,14 +36,14 @@ export const UserTable = () => {
         <TableBody>
           {users.length > 0 &&
             users.map((user) => (
-              <tr key={user._id}>
+              <TableRow key={user._id}>
                 <TableItem itemData={user.fname} />
                 <TableItem itemData={user.adress} />
                 <TableItem itemData={user.city} />
                 <TableItem itemData={user.email} />
                 <TableItem itemData={user.phone} />
-                <TableEditButton item={user} />
-              </tr>
+                <TableEditButton item={user} text="Edit User" />
+              </TableRow>
             ))}
         </TableBody>
       </TableWrapper>

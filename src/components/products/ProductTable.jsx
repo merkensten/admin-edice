@@ -6,6 +6,7 @@ import { TableHead } from '../table/TableHead';
 import { TableWrapper } from '../table/TableWrapper';
 import { TableBody } from '../table/TableBody';
 import { TableEditButton } from '../table/TableEditButton';
+import { TableRow } from '../table/TableRow';
 
 // hooks
 import { GetData } from '../../hooks/useFetch';
@@ -33,13 +34,13 @@ export const ProductTable = () => {
         <TableBody>
           {products.length > 0 &&
             products.map((product) => (
-              <tr key={product._id}>
+              <TableRow key={product._id}>
                 <TableItem itemData={product.title} />
                 <TableItem itemData={product.category} />
                 <TableItem itemData={product.price} />
                 <TableItem itemData={product.description} />
-                <TableEditButton item={product} />
-              </tr>
+                <TableEditButton item={product} text="Edit Product" />
+              </TableRow>
             ))}
         </TableBody>
       </TableWrapper>

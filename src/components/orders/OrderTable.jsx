@@ -1,4 +1,18 @@
-/* This example requires Tailwind CSS v2.0+ */
+// imports
+import * as React from 'react';
+
+// components
+import { TableItem } from '../table/TableItem';
+import { TableHead } from '../table/TableHead';
+import { TableWrapper } from '../table/TableWrapper';
+import { TableBody } from '../table/TableBody';
+import { TableEditButton } from '../table/TableEditButton';
+import { OrderTableItem } from './OrderTableItem';
+import { TableRow } from '../table/TableRow';
+
+// useFetch
+// import { GetData } from '../../hooks/useFetch';
+
 const orders = [
   {
     name: 'John Doe',
@@ -83,105 +97,52 @@ const orders = [
 ];
 
 export const OrderTable = () => {
+  // const {
+  //   data: orders,
+  //   loading,
+  //   error,
+  //   errorMessage,
+  // } = GetData(`${process.env.REACT_APP_SERVER_URL}/orders/getall`);
+
+  // temporära värden, ta bort när fetch mot server implementeras
+  const loading = false;
+  const error = null;
+  const errorMessage = null;
+
+  const tableHeadItems = [
+    { id: 1, text: 'Name' },
+    { id: 2, text: 'Order ID' },
+    { id: 3, text: 'Products' },
+    { id: 4, text: 'Amount' },
+    { id: 5, text: 'Status' },
+  ];
+
+  const changeOrderStatus = (orderId) => {
+    alert(`Change status of order ${orderId}`);
+  };
   return (
-    <div className="mt-8">
-      <div className="sm:flex sm:items-center">
-        <div className="sm:flex-auto">
-          <p className="mt-2 text-sm text-gray-700">
-            A list of all the orders.
-          </p>
-        </div>
-      </div>
-      <div className="mt-8 flex flex-col">
-        <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-            <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-              <table className="min-w-full divide-y divide-gray-300">
-                <thead className="bg-gray-50">
-                  <tr className="divide-x divide-gray-200">
-                    <th
-                      scope="col"
-                      className="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-6"
-                    >
-                      Name
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-4 py-3.5 text-left text-sm font-semibold text-gray-900"
-                    >
-                      Order ID
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-4 py-3.5 text-left text-sm font-semibold text-gray-900"
-                    >
-                      Products
-                    </th>
-                    <th
-                      scope="col"
-                      className="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pr-6"
-                    >
-                      Amount
-                    </th>
-                    <th
-                      scope="col"
-                      className="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pr-6"
-                    >
-                      Status
-                    </th>
-                    <th
-                      scope="col"
-                      className="relative py-3.5 pl-3 pr-4 sm:pr-6"
-                    >
-                      <span className="sr-only">Edit</span>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200 bg-white">
-                  {orders.map((order) => (
-                    <tr
-                      key={order.orderId}
-                      className="divide-x divide-gray-200"
-                    >
-                      <td className="whitespace-nowrap py-4 pl-4 pr-4 text-sm font-medium text-gray-900 sm:pl-6">
-                        {order.name}
-                      </td>
-                      <td className="whitespace-nowrap p-4 text-sm text-gray-500">
-                        {order.orderId}
-                      </td>
-                      <td className="whitespace-nowrap p-4 text-sm text-gray-500">
-                        {order.products.map((product, index) => {
-                          if (index === order.products.length - 1) {
-                            return <span key={product.id}>{product.name}</span>;
-                          } else {
-                            return (
-                              <span key={product.id}>{product.name}, </span>
-                            );
-                          }
-                        })}
-                      </td>
-                      <td className="whitespace-nowrap py-4 pl-4 pr-4 text-sm text-gray-500 sm:pr-6">
-                        {order.amount}
-                      </td>
-                      <td className="whitespace-nowrap py-4 pl-4 pr-4 text-sm text-gray-500 sm:pr-6">
-                        {order.status}
-                      </td>
-                      <td className="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                        <button
-                          className="text-indigo-600 hover:text-indigo-900"
-                        >
-                          Change Status
-                          <span className="sr-only">, {order.name}</span>
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <>
+      <TableWrapper loading={loading} error={error} errorMessage={errorMessage}>
+        <TableHead tableHeadItems={tableHeadItems} />
+
+        <TableBody>
+          {orders.length > 0 &&
+            orders.map((order) => (
+              <TableRow key={order._id}>
+                <TableItem itemData={order.name} />
+                <TableItem itemData={order.orderId} />
+                <OrderTableItem order={order} />
+                <TableItem itemData={order.amount} />
+                <TableItem itemData={order.status} />
+                <TableEditButton
+                  item={order}
+                  text={'Change status'}
+                  onClick={changeOrderStatus}
+                />
+              </TableRow>
+            ))}
+        </TableBody>
+      </TableWrapper>
+    </>
   );
 };
