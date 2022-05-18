@@ -10,6 +10,7 @@ export const GetData = (url) => {
   const [errorMessage, setErrorMessage] = React.useState('');
 
   React.useEffect(() => {
+    setLoading(true);
     axios
       .get(url)
       .then(function (response) {
