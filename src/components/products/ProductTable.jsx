@@ -26,7 +26,7 @@ export const ProductTable = () => {
   ];
 
   return (
-    <div>
+    <>
       <TableWrapper loading={loading} error={error} errorMessage={errorMessage}>
         <TableHead tableHeadItems={tableHeadItems} />
 
@@ -43,6 +43,6 @@ export const ProductTable = () => {
             ))}
         </TableBody>
       </TableWrapper>
-    </div>
+    </>
   );
 };
