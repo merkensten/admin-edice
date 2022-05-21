@@ -4,7 +4,6 @@ import * as React from 'react';
 import { useAuth } from '../hooks/useAuth';
 
 // components
-// import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { Navbar } from '../components/Navbar';
 
@@ -13,7 +12,6 @@ export const Layout = ({ children }) => {
 
   return (
     <>
-      {/* {user && <Navbar />} */}
       {user && <Navbar />}
       <main>{children}</main>
 

@@ -6,7 +6,7 @@ import { PageTitle } from '../../components/PageTitle';
 import { Wrapper } from '../../components/Wrappers';
 import { ProductTable } from '../../components/products/ProductTable';
 import { ProductsTitle } from '../../components/products/ProductsTitle';
-import { AddProductForm } from '../../components/products/AddProductForm';
+import { AddProductForm } from '../../components/forms/AddProductForm';
 
 // utils
 import { Modal } from '../../utils/Modal';

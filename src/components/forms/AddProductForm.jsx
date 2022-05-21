@@ -3,7 +3,7 @@ import * as React from 'react';
 import axios from 'axios';
 
 // components
-import { FormInput, TextArea } from '../forms/FormElements';
+import { FormInput, TextArea } from './FormElements';
 
 export const AddProductForm = () => {
   // product state

@@ -6,7 +6,7 @@ import { UserTable } from '../../components/users/UserTable';
 import { PageTitle } from '../../components/PageTitle';
 import { Wrapper } from '../../components/Wrappers';
 import { UsersTitle } from '../../components/users/UsersTitle';
-import { AddUsersForm } from '../../components/users/AddUsersForm';
+import { AddUsersForm } from '../../components/forms/AddUsersForm';
 
 // utils
 import { Modal } from '../../utils/Modal';

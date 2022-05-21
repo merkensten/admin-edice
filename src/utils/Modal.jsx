@@ -1,18 +1,14 @@
 // imports
 import * as React from 'react';
 
+// hooks
+import { useLockScroll } from '../hooks/useLockScroll';
+
 // components
 import { ModalBackdrop } from './ModalBackdrop';
 
 export const Modal = ({ closeModal, modalTitle, children }) => {
-  // lockScroll kan brytas ut till en custom hook
-  const lockScroll = React.useCallback(() => {
-    document.body.style.overflow = 'hidden';
-  }, []);
-
-  const unlockScroll = React.useCallback(() => {
-    document.body.style.overflow = '';
-  }, []);
+  const { lockScroll, unlockScroll } = useLockScroll();
 
   React.useEffect(() => {
     lockScroll();
