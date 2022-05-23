@@ -8,11 +8,42 @@ import { TableWrapper } from '../table/TableWrapper';
 import { TableBody } from '../table/TableBody';
 import { TableEditButton } from '../table/TableEditButton';
 import { TableRow } from '../table/TableRow';
+import { EditUser } from './EditUser';
 
 // useFetch
 import { GetData } from '../../hooks/useFetch';
+import { useLockScroll } from '../../hooks/useLockScroll';
+
+// utils
+import { Modal } from '../../utils/Modal';
 
 export const UserTable = () => {
+  const [showModal, setShowModal] = React.useState(false);
+  const [activeUser, setActiveUser] = React.useState(null);
+
+  const { unlockScroll } = useLockScroll();
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    unlockScroll();
+  };
+
+  const editUser = (user) => {
+    setActiveUser(user);
+    openModal();
+  };
+
+  const modalContent = () => {
+    return (
+      <>
+        <EditUser user={activeUser} closeModal={closeModal} />
+      </>
+    );
+  };
   const {
     data: users,
     loading,
@@ -42,11 +73,22 @@ export const UserTable = () => {
                 <TableItem itemData={user.city} />
                 <TableItem itemData={user.email} />
                 <TableItem itemData={user.phone} />
-                <TableEditButton item={user} text="Edit User" />
+                <TableEditButton
+                  item={user}
+                  text="Edit User"
+                  onClickHandler={() => editUser(user)}
+                />
               </TableRow>
             ))}
         </TableBody>
       </TableWrapper>
+      {showModal && (
+        <Modal
+          closeModal={closeModal}
+          modalTitle="Edit User"
+          children={<>{modalContent()}</>}
+        />
+      )}
     </>
   );
 };
