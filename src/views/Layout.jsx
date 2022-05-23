@@ -5,7 +5,7 @@ import { useAuth } from '../hooks/useAuth';
 
 // components
 import { Footer } from '../components/Footer';
-import { Navbar } from '../components/Navbar';
+import { Navbar } from '../components/navbar/Navbar';
 
 export const Layout = ({ children }) => {
   const { user } = useAuth();
