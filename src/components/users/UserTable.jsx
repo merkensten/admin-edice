@@ -17,6 +17,9 @@ import { useLockScroll } from '../../hooks/useLockScroll';
 // utils
 import { Modal } from '../../utils/Modal';
 
+// helpers
+import { ReloadPage } from '../../helpers/ReloadPage';
+
 export const UserTable = () => {
   const [showModal, setShowModal] = React.useState(false);
   const [activeUser, setActiveUser] = React.useState(null);
@@ -30,6 +33,8 @@ export const UserTable = () => {
   const closeModal = () => {
     setShowModal(false);
     unlockScroll();
+    // halvdan lösning för att refetcha sidan
+    ReloadPage();
   };
 
   const editUser = (user) => {

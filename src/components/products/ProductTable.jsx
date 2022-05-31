@@ -16,9 +16,27 @@ import { useLockScroll } from '../../hooks/useLockScroll';
 // utils
 import { Modal } from '../../utils/Modal';
 
+// helpers
+import { ReloadPage } from '../../helpers/ReloadPage';
+
 export const ProductTable = () => {
   const [showModal, setShowModal] = React.useState(false);
   const [activeProduct, setActiveProduct] = React.useState(null);
+  const [produkter, setProdukter] = React.useState([]);
+
+  const {
+    data: products,
+    loading,
+    error,
+    errorMessage,
+  } = GetData(`${process.env.REACT_APP_SERVER_URL}/resource/getall`);
+
+  React.useEffect(() => {
+    if (products) {
+      setProdukter(products);
+      console.log(produkter);
+    }
+  }, [products, produkter]);
 
   const { unlockScroll } = useLockScroll();
 
@@ -26,9 +44,11 @@ export const ProductTable = () => {
     setShowModal(true);
   };
 
-  const closeModal = () => {
+  const closeModal = async () => {
     setShowModal(false);
     unlockScroll();
+    // halvdan lösning för att refetcha sidan
+    ReloadPage();
   };
 
   const editProduct = (product) => {
@@ -44,13 +64,6 @@ export const ProductTable = () => {
     );
   };
 
-  const {
-    data: products,
-    loading,
-    error,
-    errorMessage,
-  } = GetData(`${process.env.REACT_APP_SERVER_URL}/resource/getall`);
-
   const tableHeadItems = [
     { id: 1, text: 'Productname' },
     { id: 2, text: 'Category' },
@@ -64,8 +77,8 @@ export const ProductTable = () => {
         <TableHead tableHeadItems={tableHeadItems} />
 
         <TableBody>
-          {products.length > 0 &&
-            products.map((product) => (
+          {produkter.length > 0 &&
+            produkter.map((product) => (
               <TableRow key={product._id}>
                 <TableItem itemData={product.title} />
                 <TableItem itemData={product.category} />
