@@ -7,6 +7,9 @@ import { useLockScroll } from '../hooks/useLockScroll';
 // components
 import { ModalBackdrop } from './ModalBackdrop';
 
+// helpers
+import { ReloadPage } from '../helpers/ReloadPage';
+
 export const Modal = ({ closeModal, modalTitle, children }) => {
   const { lockScroll, unlockScroll } = useLockScroll();
 
@@ -17,6 +20,7 @@ export const Modal = ({ closeModal, modalTitle, children }) => {
   const onCloseModal = () => {
     closeModal();
     unlockScroll();
+    ReloadPage();
   };
   return (
     <ModalBackdrop>
