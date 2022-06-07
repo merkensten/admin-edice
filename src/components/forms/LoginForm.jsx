@@ -26,6 +26,7 @@ export const LoginForm = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
   const { state } = useLocation();
+  const [password, setPassword] = React.useState('');
 
   const {
     register,
@@ -37,9 +38,12 @@ export const LoginForm = () => {
   });
 
   const onFormSubmit = () => {
-    login().then(() => {
-      navigate(state?.path || RoutingPath.App);
-    });
+    // simpelt lösenord för att få ett mer korrekt flöde, denna behöver tas bort när vi jobbar mot riktiga backenden
+    if (password === process.env.REACT_APP_PASSWORD) {
+      login().then(() => {
+        navigate(state?.path || RoutingPath.App);
+      });
+    }
   };
 
   return (
@@ -66,6 +70,7 @@ export const LoginForm = () => {
             {...register('password')}
             className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
             placeholder="Password"
+            onChange={(e) => setPassword(e.target.value)}
           />
           <p className="text-red-400">{errors.password?.message}</p>
         </div>
