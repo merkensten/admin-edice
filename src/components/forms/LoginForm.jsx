@@ -1,9 +1,6 @@
 // Imports
 import * as React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import { useNavigate } from 'react-router-dom';
 
 // custom hooks
 import { useAuth } from '../../hooks/useAuth';
@@ -13,41 +10,55 @@ import { LockClosedIcon } from '@heroicons/react/solid';
 
 // Helpers
 import { RoutingPath } from '../../routes/RoutingPath';
-
-// Schema for formvalidating
-const loginSchema = yup
-  .object({
-    email: yup.string().email().required(),
-    password: yup.string().required(),
-  })
-  .required();
+import { EnvironmentApiUrlHelper } from '../../helpers/EnvironmentApiUrlHelper';
 
 export const LoginForm = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
-  const { state } = useLocation();
+  const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [apiUrl, setApiurl] = React.useState('');
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    mode: 'onBlur',
-    resolver: yupResolver(loginSchema),
-  });
+  // Sätta vilken API som skall användas 
+  React.useEffect(() => {
+    setApiurl(EnvironmentApiUrlHelper());
+  }, [apiUrl]);
 
-  const onFormSubmit = () => {
-    // simpelt lösenord för att få ett mer korrekt flöde, denna behöver tas bort när vi jobbar mot riktiga backenden
-    if (password === process.env.REACT_APP_PASSWORD) {
-      login().then(() => {
-        navigate(state?.path || RoutingPath.App);
+  const onFormSubmit = async (event) => {
+    event.preventDefault();
+
+    const user = {
+      email,
+      password,
+    };
+
+    // Logga in användaren i backenden
+    const response = await fetch(apiUrl + '/login/admin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(user),
+    });
+
+    const data = await response.json();
+
+    if (response.status === 200) {
+      // funktion för att logga in från useAuth
+      login(
+        data.user.name,
+        data.user.email,
+        data.access_token,
+        data.user.adminId
+      ).then(() => {
+        // navigera vidare till appen
+        navigate(RoutingPath.App);
       });
     }
   };
 
   return (
-    <form className="mt-8 space-y-6" onSubmit={handleSubmit(onFormSubmit)}>
+    <form className="mt-8 space-y-6" onSubmit={onFormSubmit}>
       <input type="hidden" name="remember" defaultValue="true" />
       <div className="rounded-md shadow-sm -space-y-px">
         <div>
@@ -55,11 +66,10 @@ export const LoginForm = () => {
             Email address
           </label>
           <input
-            {...register('email')}
             className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
             placeholder="Email address"
+            onChange={(e) => setEmail(e.target.value)}
           />
-          <p className="text-red-400">{errors.email?.message}</p>
         </div>
         <div>
           <label htmlFor="password" className="sr-only">
@@ -67,12 +77,10 @@ export const LoginForm = () => {
           </label>
           <input
             type="password"
-            {...register('password')}
             className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <p className="text-red-400">{errors.password?.message}</p>
         </div>
       </div>
 

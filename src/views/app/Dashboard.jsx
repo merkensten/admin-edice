@@ -7,9 +7,18 @@ import { Wrapper } from '../../components/Wrappers';
 import { AppNavCards } from '../../components/AppNavCards';
 
 export const Dashboard = () => {
-  const user = {
-    name: 'John Doe',
+  const getUserData = () => {
+    const user = {
+      name: window.localStorage.getItem('admin-user-name'),
+    };
+
+    console.log(user.name);
+
+    return user;
   };
+
+  const user = getUserData();
+  console.log(user);
 
   return (
     <>

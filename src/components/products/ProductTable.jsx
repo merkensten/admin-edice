@@ -29,7 +29,7 @@ export const ProductTable = () => {
     loading,
     error,
     errorMessage,
-  } = GetData(`${process.env.REACT_APP_SERVER_URL}/resource/getall`);
+  } = GetData(`${process.env.REACT_APP_API_URL}/product`);
 
   React.useEffect(() => {
     if (products) {

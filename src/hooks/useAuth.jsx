@@ -7,17 +7,17 @@ export const useAuth = () => {
 
   return {
     user,
-    login() {
+    login(name, email, token, id) {
       return new Promise((res) => {
         setUser(true);
-        setLocalStorage('edice-user', 'tempuser');
+        setLocalStorage(name, email, token, id);
         res();
       });
     },
-    logout() {
+    logout(name, email, id, token) {
       return new Promise((res) => {
         setUser(false);
-        setLocalStorage('edice-user', null);
+        setLocalStorage(name, email, token, id);
         res();
       });
     },
