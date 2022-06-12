@@ -19,10 +19,19 @@ import { Modal } from '../../utils/Modal';
 
 // helpers
 import { ReloadPage } from '../../helpers/ReloadPage';
+import { EnvironmentApiUrlHelper } from '../../helpers/EnvironmentApiUrlHelper';
 
 export const UserTable = () => {
   const [showModal, setShowModal] = React.useState(false);
   const [activeUser, setActiveUser] = React.useState(null);
+  const [data, setData] = React.useState([]);
+
+  const [apiUrl, setApiurl] = React.useState('');
+
+  // Sätta vilken API som skall användas
+  React.useEffect(() => {
+    setApiurl(EnvironmentApiUrlHelper());
+  }, [apiUrl]);
 
   const { unlockScroll } = useLockScroll();
 
@@ -49,12 +58,12 @@ export const UserTable = () => {
       </>
     );
   };
-  const {
-    data: users,
-    loading,
-    error,
-    errorMessage,
-  } = GetData(`${process.env.REACT_APP_SERVER_URL}/users/getall`);
+  // const {
+  //   data: users,
+  //   loading,
+  //   error,
+  //   errorMessage,
+  // } = GetData(`${apiUrl}/user`);
 
   const tableHeadItems = [
     { id: 1, text: 'Name' },
@@ -64,17 +73,39 @@ export const UserTable = () => {
     { id: 5, text: 'Phone' },
   ];
 
+  // Hämta data från API:et med säkerhet (Refaktorisera denna koden till useFetch hooken)
+  React.useEffect(() => {
+    const getUserData = async () => {
+      const authToken = localStorage.getItem('admin-user-token');
+      console.log(authToken);
+      const response = await fetch(`${apiUrl}/user`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+      const data = await response.json();
+      setData(data);
+    };
+    getUserData();
+    console.log('banan');
+  }, [apiUrl]);
+
+  console.log(data);
+
   return (
     <>
-      <TableWrapper loading={loading} error={error} errorMessage={errorMessage}>
+      {/* <TableWrapper loading={loading} error={error} errorMessage={errorMessage}> */}
+      <TableWrapper>
         <TableHead tableHeadItems={tableHeadItems} />
 
         <TableBody>
-          {users.length > 0 &&
-            users.map((user) => (
+          {data.length > 0 &&
+            data.map((user) => (
               <TableRow key={user._id}>
-                <TableItem itemData={user.fname} />
-                <TableItem itemData={user.adress} />
+                <TableItem itemData={user.name} />
+                <TableItem itemData={user.address} />
                 <TableItem itemData={user.city} />
                 <TableItem itemData={user.email} />
                 <TableItem itemData={user.phone} />

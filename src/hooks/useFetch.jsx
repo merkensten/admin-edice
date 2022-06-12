@@ -1,3 +1,5 @@
+// Refaktorisera denna så att den jobbar mot det nya.
+
 // imports
 import * as React from 'react';
 import axios from 'axios';
@@ -8,10 +10,21 @@ export const GetData = (url) => {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(null);
   const [errorMessage, setErrorMessage] = React.useState('');
+  // const [token, setToken] = React.useState('');
+
+  // const authToken = localStorage.getItem('admin-user-token');
+  // console.log(authToken);
+
+  // const config = {
+  //   headers: { Authorization: `Basic ${authToken}` },
+  // };
+
+  // const params = {};
 
   React.useEffect(() => {
     setLoading(true);
     axios
+      // .get(url, params, config)
       .get(url)
       .then(function (response) {
         // handle success

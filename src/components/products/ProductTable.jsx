@@ -18,18 +18,26 @@ import { Modal } from '../../utils/Modal';
 
 // helpers
 import { ReloadPage } from '../../helpers/ReloadPage';
+import { EnvironmentApiUrlHelper } from '../../helpers/EnvironmentApiUrlHelper';
 
 export const ProductTable = () => {
   const [showModal, setShowModal] = React.useState(false);
   const [activeProduct, setActiveProduct] = React.useState(null);
   const [produkter, setProdukter] = React.useState([]);
 
+  const [apiUrl, setApiurl] = React.useState('');
+
+  // Sätta vilken API som skall användas
+  React.useEffect(() => {
+    setApiurl(EnvironmentApiUrlHelper());
+  }, [apiUrl]);
+
   const {
     data: products,
     loading,
     error,
     errorMessage,
-  } = GetData(`${process.env.REACT_APP_API_URL}/product`);
+  } = GetData(`${apiUrl}/product`);
 
   React.useEffect(() => {
     if (products) {
