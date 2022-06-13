@@ -6,14 +6,15 @@ import axios from 'axios';
 import { FormInput } from './FormElements';
 
 export const EditUserForm = ({ user }) => {
-  // user state
-  const [fname, setFname] = React.useState(user.fname);
-  const [lname, setLname] = React.useState(user.lname);
-  const [adress, setAdress] = React.useState(user.adress);
+  console.log(user);
+  // user stat`
+  const [name, setName] = React.useState(user.name);
+  const [adress, setAdress] = React.useState(user.address);
   const [zipcode, setZipcode] = React.useState(user.zipcode);
   const [city, setCity] = React.useState(user.city);
   const [phone, setPhone] = React.useState(user.phone);
   const [email, setEmail] = React.useState(user.email);
+  const [userId] = React.useState(user._id);
 
   // form state
   const [formSucess, setFormSucess] = React.useState(false);
@@ -22,8 +23,7 @@ export const EditUserForm = ({ user }) => {
 
   // clear input fields
   const clearInputFields = () => {
-    setFname('');
-    setLname('');
+    setName('');
     setAdress('');
     setZipcode('');
     setCity('');
@@ -35,20 +35,28 @@ export const EditUserForm = ({ user }) => {
   // funktion för att skapa userObjektet
   const createUserObject = () => {
     return {
-      fname: fname.toString(),
-      lname: lname.toString(),
-      adress: adress.toString(),
+      name: name.toString(),
+      address: adress.toString(),
       city: city.toString(),
       zipcode: zipcode.toString(),
       phone: phone.toString(),
       email: email.toString(),
+      // password: 'banana',
     };
   };
 
   // funktion för att skicka in userObjektet till databasen
-  const postDataWithAxios = (user) => {
+  const updateDataWithAxios = (user) => {
+    const authToken = localStorage.getItem('admin-user-token');
+    console.log(`${process.env.REACT_APP_SERVER_API}/user/${userId}`);
+
     axios
-      .post(`${process.env.REACT_APP_SERVER_URL}/users`, user)
+      .put(`${process.env.REACT_APP_SERVER_API}/user/${userId}`, user, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${authToken}`,
+        },
+      })
       .then(function (response) {
         // handle success
         setFormSucess(true);
@@ -80,7 +88,7 @@ export const EditUserForm = ({ user }) => {
 
     console.log(user);
 
-    postDataWithAxios(user);
+    updateDataWithAxios(user);
 
     return;
   };
@@ -104,23 +112,15 @@ export const EditUserForm = ({ user }) => {
       {!formSucess && (
         <form onSubmit={(event) => onFormSubmit(event)}>
           <FormInput
-            label="First name"
+            label="Name"
             type="text"
-            name="fname"
-            id="fname"
-            placeholder="first name"
-            setInputState={setFname}
-            inputState={fname}
+            name="name"
+            id="name"
+            placeholder="Name..."
+            setInputState={setName}
+            inputState={name}
           />
-          <FormInput
-            label="Last name"
-            type="text"
-            name="lname"
-            id="lname"
-            placeholder="lname"
-            setInputState={setLname}
-            inputState={lname}
-          />
+
           <FormInput
             label="Adress"
             type="text"
