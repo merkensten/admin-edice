@@ -26,12 +26,12 @@ export const UserTable = () => {
   const [activeUser, setActiveUser] = React.useState(null);
   const [data, setData] = React.useState([]);
 
-  const [apiUrl, setApiurl] = React.useState('');
+  // const [apiUrl, setApiurl] = React.useState('');
 
   // Sätta vilken API som skall användas
-  React.useEffect(() => {
-    setApiurl(EnvironmentApiUrlHelper());
-  }, [apiUrl]);
+  // React.useEffect(() => {
+  //   setApiurl(EnvironmentApiUrlHelper());
+  // }, [apiUrl]);
 
   const { unlockScroll } = useLockScroll();
 
@@ -77,8 +77,7 @@ export const UserTable = () => {
   React.useEffect(() => {
     const getUserData = async () => {
       const authToken = localStorage.getItem('admin-user-token');
-      console.log(authToken);
-      const response = await fetch(`${apiUrl}/user`, {
+      const response = await fetch(`${process.env.REACT_APP_SERVER_API}/user`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -89,10 +88,7 @@ export const UserTable = () => {
       setData(data);
     };
     getUserData();
-    console.log('banan');
-  }, [apiUrl]);
-
-  console.log(data);
+  }, []);
 
   return (
     <>
