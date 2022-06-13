@@ -6,16 +6,17 @@ import axios from 'axios';
 import { FormInput, TextArea } from './FormElements';
 
 export const EditProductForm = ({ product }) => {
-  console.log(product);
   // product state
   const [title, setTitle] = React.useState(product.title);
   const [description, setDescription] = React.useState(product.description);
   const [price, setPrice] = React.useState(product.price);
-  const [image, setImage] = React.useState(product.img);
+  const [primaryImage, setPrimaryImage] = React.useState(product.imagePrimary);
+  const [images, setImages] = React.useState(product.images);
   const [material, setMaterial] = React.useState(product.material);
   const [slug, setSlug] = React.useState(product.slug);
   const [quantity, setQuantity] = React.useState(product.quantity);
   const [category, setCategory] = React.useState(product.category);
+  const [productId] = React.useState(product._id);
 
   // form state
   const [formSucess, setFormSucess] = React.useState(false);
@@ -27,7 +28,8 @@ export const EditProductForm = ({ product }) => {
     setTitle('');
     setDescription('');
     setPrice('');
-    setImage('');
+    setPrimaryImage('');
+    setImages('');
     setMaterial('');
     setSlug('');
     setQuantity('');
@@ -43,7 +45,8 @@ export const EditProductForm = ({ product }) => {
       price: price,
       description: description,
       material: material,
-      img: image,
+      imagePrimary: primaryImage,
+      images: images,
       quantity: quantity || 1,
       slug: slug,
     };
@@ -51,10 +54,17 @@ export const EditProductForm = ({ product }) => {
 
   // funktion för att skicka in produktObjektet till databasen
   const updateDataWithAxios = (product) => {
+    const authToken = localStorage.getItem('admin-user-token');
     axios
       .put(
-        `${process.env.REACT_APP_SERVER_URL}/resource/${product._id}`,
-        product
+        `${process.env.REACT_APP_SERVER_API}/product/${productId}`,
+        product,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
       )
       .then(function (response) {
         // handle success
@@ -153,13 +163,22 @@ export const EditProductForm = ({ product }) => {
             inputState={price}
           />
           <FormInput
-            label="Img"
+            label="Primary Img"
+            type="text"
+            name="primary-img"
+            id="primary-img"
+            placeholder="img file name"
+            setInputState={setPrimaryImage}
+            inputState={primaryImage}
+          />
+          <FormInput
+            label="Images"
             type="text"
             name="img"
             id="img"
-            placeholder="img file name"
-            setInputState={setImage}
-            inputState={image}
+            placeholder="type in image file names separated by commas"
+            setInputState={setImages}
+            inputState={images}
           />
           <FormInput
             label="Quantity"
