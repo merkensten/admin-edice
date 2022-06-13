@@ -18,6 +18,8 @@ export const LoginForm = () => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [apiUrl, setApiurl] = React.useState('');
+  const [formError, setFormError] = React.useState(false);
+  const [formErrorMessage, setFormErrorMessage] = React.useState('');
 
   // Sätta vilken API som skall användas
   React.useEffect(() => {
@@ -33,30 +35,36 @@ export const LoginForm = () => {
     };
 
     // Logga in användaren i backenden
-    const response = await fetch(
-      process.env.REACT_APP_SERVER_API + '/login/admin',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(user),
+    try {
+      const response = await fetch(
+        process.env.REACT_APP_SERVER_API + '/login/admin',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(user),
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.status === 200) {
+        // funktion för att logga in från useAuth
+        login(
+          data.user.name,
+          data.user.email,
+          data.access_token,
+          data.user.adminId
+        ).then(() => {
+          // navigera vidare till appen
+          navigate(RoutingPath.App);
+        });
       }
-    );
-
-    const data = await response.json();
-
-    if (response.status === 200) {
-      // funktion för att logga in från useAuth
-      login(
-        data.user.name,
-        data.user.email,
-        data.access_token,
-        data.user.adminId
-      ).then(() => {
-        // navigera vidare till appen
-        navigate(RoutingPath.App);
-      });
+    } catch (error) {
+      console.log('Banana');
+      setFormError(true);
+      setFormErrorMessage('Wrong email or password');
     }
   };
 
@@ -86,6 +94,7 @@ export const LoginForm = () => {
           />
         </div>
       </div>
+      {formError && <p className=" text-red-600">{formErrorMessage}</p>}
 
       <div>
         <button

@@ -8,12 +8,49 @@ import { TableWrapper } from '../table/TableWrapper';
 import { TableBody } from '../table/TableBody';
 import { TableEditButton } from '../table/TableEditButton';
 import { TableRow } from '../table/TableRow';
+import { UpdateOrder } from './UpdateOrder';
 
 // useFetch
 // import { GetData } from '../../hooks/useFetch';
+import { useLockScroll } from '../../hooks/useLockScroll';
+
+// utils
+import { Modal } from '../../utils/Modal';
+
+// helpers
+import { ReloadPage } from '../../helpers/ReloadPage';
 
 export const OrderTable = () => {
   const [orders, setOrders] = React.useState([]);
+  const [showModal, setShowModal] = React.useState(false);
+  const [activeOrder, setActiveOrder] = React.useState(null);
+
+  const { unlockScroll } = useLockScroll();
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    unlockScroll();
+    // halvdan lösning för att refetcha sidan
+    ReloadPage();
+  };
+
+  const editOrder = (order) => {
+    console.log('Banana');
+    setActiveOrder(order);
+    openModal();
+  };
+
+  const modalContent = () => {
+    return (
+      <>
+        <UpdateOrder order={activeOrder} closeModal={closeModal} />
+      </>
+    );
+  };
 
   // temporära värden, refaktorisera om koden till att sätta dessa dynamiskt
   const loading = false;
@@ -26,10 +63,6 @@ export const OrderTable = () => {
     { id: 4, text: 'Amount' },
     { id: 5, text: 'Status' },
   ];
-
-  const changeOrderStatus = (orderId) => {
-    alert(`Change status of order ${orderId}`);
-  };
 
   React.useEffect(() => {
     const getUserData = async () => {
@@ -61,18 +94,28 @@ export const OrderTable = () => {
               <TableRow key={order._id}>
                 <TableItem itemData={order.name} />
                 <TableItem itemData={order._id} />
-                {/* <OrderTableItem order={order} /> */}
                 <TableItem itemData={order.total} />
                 <TableItem itemData={order.status} />
-                <TableEditButton
-                  item={order}
-                  text={'Change status'}
-                  onClick={changeOrderStatus}
-                />
+
+                <td className="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                  <button
+                    onClick={() => editOrder(order)}
+                    className="text-indigo-600 hover:text-indigo-900"
+                  >
+                    Edit order
+                  </button>
+                </td>
               </TableRow>
             ))}
         </TableBody>
       </TableWrapper>
+      {showModal && (
+        <Modal
+          closeModal={closeModal}
+          modalTitle="Edit Order"
+          children={<>{modalContent()}</>}
+        />
+      )}
     </>
   );
 };
