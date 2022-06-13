@@ -3,7 +3,6 @@ import * as React from 'react';
 import axios from 'axios';
 
 // components
-import { FormInput } from '../../components/forms/FormElements';
 import { UpdateOrderBtn } from './UpdateOrderBtn';
 
 export const UpdateOrder = ({ order, closeModal }) => {
