@@ -25,13 +25,6 @@ export const ProductTable = () => {
   const [activeProduct, setActiveProduct] = React.useState(null);
   const [produkter, setProdukter] = React.useState([]);
 
-  const [apiUrl, setApiurl] = React.useState('');
-
-  // Sätta vilken API som skall användas
-  React.useEffect(() => {
-    setApiurl(EnvironmentApiUrlHelper());
-  }, [apiUrl]);
-
   const {
     data: products,
     loading,

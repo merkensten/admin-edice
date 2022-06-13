@@ -19,7 +19,7 @@ export const LoginForm = () => {
   const [password, setPassword] = React.useState('');
   const [apiUrl, setApiurl] = React.useState('');
 
-  // Sätta vilken API som skall användas 
+  // Sätta vilken API som skall användas
   React.useEffect(() => {
     setApiurl(EnvironmentApiUrlHelper());
   }, [apiUrl]);
@@ -33,13 +33,16 @@ export const LoginForm = () => {
     };
 
     // Logga in användaren i backenden
-    const response = await fetch(apiUrl + '/login/admin', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(user),
-    });
+    const response = await fetch(
+      process.env.REACT_APP_SERVER_API + '/login/admin',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(user),
+      }
+    );
 
     const data = await response.json();
 

@@ -10,7 +10,8 @@ export const AddProductForm = () => {
   const [title, setTitle] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [price, setPrice] = React.useState('');
-  const [image, setImage] = React.useState('');
+  const [primaryImage, setPrimaryImage] = React.useState('');
+  const [images, setImages] = React.useState('');
   const [material, setMaterial] = React.useState('');
   const [slug, setSlug] = React.useState('');
   const [quantity, setQuantity] = React.useState('');
@@ -26,7 +27,8 @@ export const AddProductForm = () => {
     setTitle('');
     setDescription('');
     setPrice('');
-    setImage('');
+    setPrimaryImage('');
+    setImages('');
     setMaterial('');
     setSlug('');
     setQuantity('');
@@ -42,7 +44,8 @@ export const AddProductForm = () => {
       price: price,
       description: description,
       material: material,
-      img: image,
+      imagePrimary: primaryImage,
+      images: images,
       quantity: quantity || 1,
       slug: slug,
     };
@@ -50,8 +53,14 @@ export const AddProductForm = () => {
 
   // funktion för att skicka in produktObjektet till databasen
   const postDataWithAxios = (product) => {
+    const authToken = localStorage.getItem('admin-user-token');
     axios
-      .post(`${process.env.REACT_APP_SERVER_URL}/resource`, product)
+      .post(`${process.env.REACT_APP_SERVER_API}/product`, product, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${authToken}`,
+        },
+      })
       .then(function (response) {
         // handle success
         setFormSucess(true);
@@ -149,13 +158,22 @@ export const AddProductForm = () => {
             inputState={price}
           />
           <FormInput
-            label="Img"
+            label="Primary Img"
             type="text"
-            name="img"
-            id="img"
+            name="primary-img"
+            id="primary-img"
             placeholder="img file name"
-            setInputState={setImage}
-            inputState={image}
+            setInputState={setPrimaryImage}
+            inputState={primaryImage}
+          />
+          <FormInput
+            label="Images"
+            type="text"
+            name="images"
+            id="images"
+            placeholder="type in image names separated by commas"
+            setInputState={setImages}
+            inputState={images}
           />
           <FormInput
             label="Quantity"

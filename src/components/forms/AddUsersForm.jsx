@@ -7,9 +7,8 @@ import { FormInput } from './FormElements';
 
 export const AddUsersForm = () => {
   // user state
-  const [fname, setFname] = React.useState('');
-  const [lname, setLname] = React.useState('');
-  const [adress, setAdress] = React.useState('');
+  const [name, setName] = React.useState('');
+  const [address, setAddress] = React.useState('');
   const [zipcode, setZipcode] = React.useState('');
   const [city, setCity] = React.useState('');
   const [phone, setPhone] = React.useState('');
@@ -23,9 +22,8 @@ export const AddUsersForm = () => {
 
   // clear input fields
   const clearInputFields = () => {
-    setFname('');
-    setLname('');
-    setAdress('');
+    setName('');
+    setAddress('');
     setZipcode('');
     setCity('');
     setPhone('');
@@ -37,9 +35,8 @@ export const AddUsersForm = () => {
   // funktion för att skapa userObjektet
   const createUserObject = () => {
     return {
-      fname: fname.toString(),
-      lname: lname.toString(),
-      adress: adress.toString(),
+      name: name.toString(),
+      address: address.toString(),
       city: city.toString(),
       zipcode: zipcode.toString(),
       phone: phone.toString(),
@@ -50,8 +47,14 @@ export const AddUsersForm = () => {
 
   // funktion för att skicka in userObjektet till databasen
   const postDataWithAxios = (user) => {
+    const authToken = localStorage.getItem('admin-user-token');
     axios
-      .post(`${process.env.REACT_APP_SERVER_URL}/users`, user)
+      .post(`${process.env.REACT_APP_SERVER_API}/user`, user, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${authToken}`,
+        },
+      })
       .then(function (response) {
         // handle success
         setFormSucess(true);
@@ -107,31 +110,23 @@ export const AddUsersForm = () => {
       {!formSucess && (
         <form onSubmit={(event) => onFormSubmit(event)}>
           <FormInput
-            label="First name"
+            label="Name"
             type="text"
-            name="fname"
-            id="fname"
-            placeholder="first name"
-            setInputState={setFname}
-            inputState={fname}
+            name="name"
+            id="name"
+            placeholder="Type in the users name..."
+            setInputState={setName}
+            inputState={name}
           />
-          <FormInput
-            label="Last name"
-            type="text"
-            name="lname"
-            id="lname"
-            placeholder="lname"
-            setInputState={setLname}
-            inputState={lname}
-          />
+
           <FormInput
             label="Adress"
             type="text"
             name="Adress"
             id="Adress"
             placeholder="Adress"
-            setInputState={setAdress}
-            inputState={adress}
+            setInputState={setAddress}
+            inputState={address}
           />
           <FormInput
             label="Zipcode"

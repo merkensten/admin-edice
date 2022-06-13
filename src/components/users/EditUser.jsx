@@ -13,8 +13,14 @@ export const EditUser = ({ user, closeModal }) => {
 
   const deleteUser = () => {
     setUserDeleted(true);
+    const authToken = localStorage.getItem('admin-user-token');
     axios
-      .delete(`${process.env.REACT_APP_SERVER_URL}/users/${user._id}`)
+      .delete(`${process.env.REACT_APP_SERVER_API}/user/${user._id}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${authToken}`,
+        },
+      })
       .then(function (response) {
         // handle success
         setUserDeleted(true);

@@ -11,7 +11,7 @@ import { TableRow } from '../table/TableRow';
 import { EditUser } from './EditUser';
 
 // useFetch
-import { GetData } from '../../hooks/useFetch';
+// import { GetData } from '../../hooks/useFetch';
 import { useLockScroll } from '../../hooks/useLockScroll';
 
 // utils
@@ -19,19 +19,11 @@ import { Modal } from '../../utils/Modal';
 
 // helpers
 import { ReloadPage } from '../../helpers/ReloadPage';
-import { EnvironmentApiUrlHelper } from '../../helpers/EnvironmentApiUrlHelper';
 
 export const UserTable = () => {
   const [showModal, setShowModal] = React.useState(false);
   const [activeUser, setActiveUser] = React.useState(null);
   const [data, setData] = React.useState([]);
-
-  // const [apiUrl, setApiurl] = React.useState('');
-
-  // Sätta vilken API som skall användas
-  // React.useEffect(() => {
-  //   setApiurl(EnvironmentApiUrlHelper());
-  // }, [apiUrl]);
 
   const { unlockScroll } = useLockScroll();
 

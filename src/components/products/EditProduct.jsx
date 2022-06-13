@@ -11,9 +11,16 @@ export const EditProduct = ({ product, closeModal }) => {
   const [errorMessage, setErrorMessage] = React.useState('');
 
   const deleteProduct = () => {
+    const authToken = localStorage.getItem('admin-user-token');
     setProductDeleted(true);
     axios
-      .delete(`${process.env.REACT_APP_SERVER_URL}/resource/${product._id}`)
+      .delete(`${process.env.REACT_APP_SERVER_API}/product/${product._id}`, 
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${authToken}`,
+        },
+      })
       .then(function (response) {
         // handle success
         setProductDeleted(true);
